@@ -1,6 +1,4 @@
-version: "3.8"
 services:
-
   mariadb:
     container_name: Database
     image: mariadb:10.6.4-focal

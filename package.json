@@ -1,7 +1,6 @@
 {
-    "name": "cbbb",
+    "name": "url-shortener",
     "description": "Zkracovač url adres",
-    "homepage": "https://cbbb.cz/",
     "private": true,
     "devDependencies": {
         "@babel/plugin-transform-runtime": "^7.15.8",

@@ -1,0 +1,28 @@
+# Apache configuration file (see https://httpd.apache.org/docs/current/mod/quickreference.html)
+Require all granted
+
+# disable directory listing
+<IfModule mod_autoindex.c>
+	#Options -Indexes
+</IfModule>
+
+# enable cool URL
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	RewriteBase /
+
+	# Přesměrování bez www → na www
+	RewriteCond %{HTTP_HOST} ^(?!www\.)(.+) [NC]
+	RewriteRule ^(.*)$ https://www.%1/$1 [R=301,L,NE]
+
+	# --- Přesměrování root URL na jinou adresu ---
+	# Přesměruje pouze přesnou domovskou stránku /
+	RewriteCond %{REQUEST_URI} ^/$
+	RewriteRule ^$ https://www.collectorboy.cz/?utm_source=batboy.cz&utm_campaign=batboy.cz&utm_medium=redirect [R=301,L]
+
+	# --- Nette front controller ---
+	# nechá fungovat /admin/ a všechny běžné requesty
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteRule !\.(pdf|js|mjs|ico|gif|jpg|jpeg|png|webp|svg|css|rar|zip|7z|tar\.gz|map|eot|ttf|otf|woff|woff2)$ index.php [L]
+</IfModule>

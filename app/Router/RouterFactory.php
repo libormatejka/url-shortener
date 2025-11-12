@@ -19,13 +19,8 @@ final class RouterFactory
 		$frontRouter->addRoute('<slug .+>', 'Url:detail');
 		$frontRouter->addRoute('<presenter>/<action>[/<id>]', 'Homepage:default');
 
-		$apiRouter = new RouteList('Api');
-		$apiRouter->addRoute('api/v1/<presenter>/<action>[/<id>]', 'Url:urls');
-		$apiRouter->addRoute('api/metadata/', 'Metadata:metadata');
-
 		$router = new RouteList();
 		$router->add($adminRouter);
-		$router->add($apiRouter);
 		$router->add($frontRouter);
 
 		return $router;

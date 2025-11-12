@@ -4,11 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 
-	<title>{ifset title}{include title|stripHtml} | {/ifset}CBBB.cz</title>
-
-	<!-- Google Tag Manager -->
-	{control gTM:head}
-	<!-- End Google Tag Manager -->
+	<title>{ifset title}{include title|stripHtml}{/ifset}</title>
 
 	<!-- SEO -->
 	<meta name="description" content="Zkracovač URL">
@@ -31,11 +27,6 @@
 	class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed"
 	style="--kt-toolbar-height:15px;--kt-toolbar-height-tablet-and-mobile:55px"
 >
-
-	<!-- Google Tag Manager (noscript) -->
-	{control gTM:body}
-	<!-- End Google Tag Manager (noscript) -->
-
 	<div
 		n:syntax="off"
 		class="header-menu align-items-stretch drawer drawer-end"

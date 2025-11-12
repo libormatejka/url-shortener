@@ -16,10 +16,12 @@ auth.json
 *.code-workspace
 .vscode
 
-.htaccess
-
 # Nette
 config/manifest.json
 qa/phpcs/phpcs.cache
 node_modules
 www/assets
+
+temp*
+temp/cache*
+temp/cache/*

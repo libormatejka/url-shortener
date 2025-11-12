@@ -21,7 +21,7 @@ final class UserFixture extends AbstractFixture implements OrderedFixtureInterfa
 				"firstname" => "Libor",
 				"lastname" => "Matějka",
 				"username" => "libormatejka",
-				"email" => "libor.matejka@hotmail.cz",
+				"email" => "jsem@libor-matejka.cz",
 				"password" => "12345",
 				"createdAt" => new DateTime("2001-10-01 10:00"),
 				"role" => 3,
