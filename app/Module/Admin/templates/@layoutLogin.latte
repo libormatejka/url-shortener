@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+
+	<title>{ifset title}{include title|stripHtml} | {/ifset}CBBB.cz | Zkracovač URL</title>
+
+	<!-- Google Tag Manager -->
+	{control gTM:head}
+	<!-- End Google Tag Manager -->
+
+	<!-- SEO -->
+	<meta name="description" content="Zkracovač URL">
+	<meta name='robots' content='noindex, nofollow' />
+
+	<!-- CSS -->
+	{if App\Bootstrap::loadAsset('front.css') !== null}
+		{control assets:css}
+	{/if}
+
+	<!--Google Fonts -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+
+	<!-- Favicons -->
+	{control favicons}
+
+</head>
+
+<body id="kt_body" class="bg-body" style="background-color: #f8f8f8 !important;">
+
+	<!-- Google Tag Manager (noscript) -->
+	{control gTM:body}
+	<!-- End Google Tag Manager (noscript) -->
+
+	<div class="d-flex flex-column flex-root">
+
+		<!--begin::Authentication - Sign-in -->
+		<div class="d-flex flex-column flex-lg-row flex-column-fluid">
+
+			<!--begin::Body-->
+			<div class="d-flex flex-column flex-lg-row-fluid py-10">
+
+				<!--begin::Content-->
+				<div class="d-flex flex-center flex-column flex-column-fluid">
+
+					<!--begin::Alert-->
+					<div n:if="count($flashes) !== 0">
+
+						<div n:foreach="$flashes as $flash" class="alert alert-dismissible bg-light-danger d-flex flex-column border-danger border-dashed flex-sm-row w-100 p-5 mb-10 w-lg-500px align-items-center">
+							<!--begin::Icon-->
+							<!--begin::Svg Icon | path: icons/duotune/communication/com003.svg-->
+							<span class="svg-icon svg-icon-2hx svg-icon-danger me-4 mb-5 mb-sm-0">
+								<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+									<path opacity="0.3" d="M2 4V16C2 16.6 2.4 17 3 17H13L16.6 20.6C17.1 21.1 18 20.8 18 20V17H21C21.6 17 22 16.6 22 16V4C22 3.4 21.6 3 21 3H3C2.4 3 2 3.4 2 4Z" fill="black"></path>
+									<path d="M18 9H6C5.4 9 5 8.6 5 8C5 7.4 5.4 7 6 7H18C18.6 7 19 7.4 19 8C19 8.6 18.6 9 18 9ZM16 12C16 11.4 15.6 11 15 11H6C5.4 11 5 11.4 5 12C5 12.6 5.4 13 6 13H15C15.6 13 16 12.6 16 12Z" fill="black"></path>
+								</svg>
+							</span>
+							<!--end::Svg Icon-->
+							<!--end::Icon-->
+							<!--begin::Content-->
+							<div class="d-flex flex-column pe-0 pe-sm-10">
+								<h4 class="fw-bold">{$flash->message}</h4>
+							</div>
+							<!--end::Content-->
+							<!--begin::Close-->
+							<button type="button" class="position-absolute position-sm-relative m-2 m-sm-0 top-0 end-0 btn btn-icon ms-sm-auto" data-bs-dismiss="alert">
+								<!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+								<span class="svg-icon svg-icon-1 svg-icon-danger">
+									<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+										<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="black"></rect>
+										<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="black"></rect>
+									</svg>
+								</span>
+								<!--end::Svg Icon-->
+							</button>
+							<!--end::Close-->
+						</div>
+
+					</div>
+					<!--end::Alert-->
+
+					<!--begin::Wrapper-->
+					<div class="w-lg-500px p-10 p-lg-15 mx-auto bg-white rounded rounded-2">
+
+						<!--begin::Form-->
+						{control login}
+						<!--end::Form-->
+
+					</div><!--end::Wrapper-->
+
+				</div><!--end::Content-->
+
+				{control footer}
+
+			</div>
+
+		</div>
+
+	</div>
+
+	{block scripts}
+
+	{if App\Bootstrap::loadAsset('admin.js') !== null}
+		{control assets:js}
+	{/if}
+
+	<script defer src="https://nette.github.io/resources/js/3/netteForms.min.js"></script>
+
+	<!--begin::Global Javascript Bundle(used by all pages)-->
+	<script src="https://preview.keenthemes.com//metronic8/demo1/assets/plugins/global/plugins.bundle.js"></script>
+	<script src="https://preview.keenthemes.com//metronic8/demo1/assets/js/scripts.bundle.js"></script>
+	<!--end::Global Javascript Bundle-->
+
+	{/block}
+
+</body>
+</html>

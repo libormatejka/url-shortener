@@ -1,0 +1,99 @@
+{block content}
+
+<!--begin::Row-->
+<div class="row gy-5 g-xl-8 pb-5">
+
+	<!--begin::Col-->
+	<div class="col-xl-12">
+
+		<div class="card shadow-sm">
+
+			<div class="card-header align-items-center mt-2">
+				<h3 class="card-title align-items-start flex-column">
+					<span class="fw-bolder mb-2 text-dark">Vítejte v administraci <strong>zkracovače CBBB.cz</strong></span>
+				</h3>
+			</div>
+
+			<div class="card-body fs-5">
+				Vítej {$user->getIdentity()->firstname} v administraci. Dnes je <strong>{="now"|date:'j.n.Y'}</strong>.
+			</div>
+
+		</div>
+
+	</div>
+	<!--end::Col-->
+
+</div>
+
+<!--begin::Row-->
+<div class="row gy-5 g-xl-8 pb-5">
+
+	<!--begin::Col-->
+	<div class="col-xl-6">
+
+		<div class="card shadow-sm">
+
+			<div class="card-header align-items-center mt-2">
+				<h3 class="card-title align-items-start flex-column">
+					<span class="fw-bolder mb-2 text-dark">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="mb-1 bi bi-send-fill me-2" viewBox="0 0 16 16">
+							<path fill-rule="evenodd" d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 3.178 4.995.002.002.26.41a.5.5 0 0 0 .886-.083l6-15Zm-1.833 1.89.471-1.178-1.178.471L5.93 9.363l.338.215a.5.5 0 0 1 .154.154l.215.338 7.494-7.494Z"/>
+						</svg>
+						URL
+					</span>
+				</h3>
+			</div>
+
+			<div class="card-body fs-5">
+
+				<p>Můžeš vytvořit zkrácené odkazy a uložit si je na později.</p>
+
+				<a n:href="Url:Create" class="btn btn-primary">
+					Přidat URL
+				</a>
+
+				<a n:href="Url:" class="btn btn-primary">
+					Seznam URL
+				</a>
+
+			</div>
+
+		</div>
+
+	</div>
+	<!--end::Col-->
+
+	<!--begin::Col-->
+	<div class="col-xl-6">
+
+		<div class="card shadow-sm">
+
+			<div class="card-header align-items-center mt-2">
+				<h3 class="card-title align-items-start flex-column">
+					<span class="fw-bolder mb-2 text-dark">
+					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="mb-1 bi bi-bookmark-fill me-2" viewBox="0 0 16 16">
+							<path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/>
+					</svg>
+					Kategorie</span>
+				</h3>
+			</div>
+
+			<div class="card-body fs-5">
+
+				<p>Můžeš vytvořit kategorie pro zkrácené odkazy a uložit si je na později.</p>
+
+				<a n:href="Category:Create" class="btn btn-primary">
+					Přidat kategorii
+				</a>
+
+				<a n:href="Category:" class="btn btn-primary">
+					Seznam kategorií
+				</a>
+			</div>
+
+		</div>
+
+	</div>
+	<!--end::Col-->
+
+</div>

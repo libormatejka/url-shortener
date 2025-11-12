@@ -1,0 +1,31 @@
+{block content}
+<div class="card card-custom gutter-b example example-compact">
+
+	<div class="card-header">
+
+		<h1 class="card-title">
+			<strong  n:block="title">Detail role</strong>
+		</h1>
+
+	</div>
+
+	<div class="card-body">
+
+		<div class="d-flex flex-center py-3">
+
+			<span class="bullet bullet-bar bg-danger align-self-stretch mr-4 my-1"></span>
+			<div class="d-flex flex-column flex-grow-1">
+				<a href="#" class="card-label fw-bolder text-dark fs-5 mb-2">Jméno role</a>
+				<span class="text-muted font-weight-bold">{$role->getName()}</span>
+			</div>
+
+		</div>
+
+	</div>
+
+	<div class="card-footer">
+		<a n:href=":Admin:Role:update $role->getId()" class="btn btn-primary mr-2">Upravit roli</a>
+		<a n:href="Role:" type="reset" class="btn btn-secondary">Zpět na výpis</a>
+	</div>
+
+</div>

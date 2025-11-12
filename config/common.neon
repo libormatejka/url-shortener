@@ -1,0 +1,60 @@
+parameters:
+
+	GTM:
+		gtmId: GTM-WD2JNHV
+
+	version:
+		app: 0.1
+		css: 0.1
+		js: 0.1
+
+application:
+	errorPresenter: Front:Error
+	mapping:
+		*: [App\Module, * ,*\*Presenter]
+
+
+session:
+	expiration: 14 days
+
+
+di:
+	export:
+		parameters: no
+		tags: no
+
+search:
+	frontModule:
+		in: %appDir%/Module/Front
+
+		files:
+			- *Factory.php
+
+	adminModule:
+		in: %appDir%/Module/Admin
+
+		files:
+			- *Factory.php
+
+	resolver:
+		in: %appDir%/Model/Resolver
+
+services:
+	- App\Router\RouterFactory::createRouter
+	- App\Model\Resolver\Authenticator\CbbbAuthenticator
+	security.passwords: Nette\Security\Passwords(::PASSWORD_BCRYPT, [cost: 12])
+
+	-
+		implement: App\Module\Front\Component\GTM\IGTMFactory
+		arguments: [%GTM.gtmId%]
+
+	-
+		implement: App\Module\Front\Component\Assets\IAssetsFactory
+		arguments: [%version.css%, %version.js%]
+
+includes:
+	- doctrine.neon
+
+http:
+	headers:
+		X-Powered-By: Nette & CBBB

@@ -1,0 +1,132 @@
+{block content}
+<div class="card card-custom gutter-b example example-compact">
+
+	<div class="card-header">
+
+		<h1 class="card-title">
+			<strong n:block="title">Detail URL</strong>
+		</h1>
+
+	</div>
+
+	<div class="card-body">
+
+		<div class="d-flex flex-center py-3">
+
+			<span class="bullet bullet-vertical h-40px bg-danger me-5"></span>
+			<div class="d-flex flex-column flex-grow-1">
+				<a href="#" class="card-label fw-bolder text-dark fs-5 mb-2">#ID</a>
+				<span class="text-muted font-weight-bold">{$url->getId()}</span>
+			</div>
+
+		</div>
+
+		<div class="separator separator-dashed my-3"></div>
+
+		<div class="d-flex flex-center py-3">
+
+			<span class="bullet bullet-vertical h-40px bg-danger me-5"></span>
+			<div class="d-flex flex-column flex-grow-1">
+				<a href="#" class="card-label fw-bolder text-dark fs-5 mb-2">Název</a>
+				<span class="text-muted font-weight-bold">{$url->getTitle()} </span>
+			</div>
+
+		</div>
+
+		<div class="separator separator-dashed my-3"></div>
+
+		<div class="d-flex flex-center py-3">
+
+			<span class="bullet bullet-vertical h-40px bg-danger me-5"></span>
+			<div class="d-flex flex-column flex-grow-1">
+				<a href="#" class="card-label fw-bolder text-dark fs-5 mb-2">Zdrojové URL</a>
+				<span class="text-muted font-weight-bold">https://cbbb.cz/{$url->getSourceUrl()}</span>
+			</div>
+
+		</div>
+
+		<div class="separator separator-dashed my-3"></div>
+
+		<div class="d-flex flex-center py-3">
+
+			<span class="bullet bullet-vertical h-40px bg-danger me-5"></span>
+			<div class="d-flex flex-column flex-grow-1">
+				<a href="#" class="card-label fw-bolder text-dark fs-5 mb-2">Cílová URL</a>
+				<span class="text-muted font-weight-bold">{$url->getDestinationUrl()}</span>
+			</div>
+
+		</div>
+
+		<div class="separator separator-dashed my-3"></div>
+
+		<div class="d-flex flex-center py-3">
+
+			<span class="bullet bullet-vertical h-40px bg-danger me-5"></span>
+			<div class="d-flex flex-column flex-grow-1">
+				<a href="#" class="card-label fw-bolder text-dark fs-5 mb-2">Counter</a>
+				<span class="text-muted font-weight-bold">
+					{if $url->getCounter()}
+						{$url->getCounter()}x
+					{else}
+						0x
+					{/if}
+				</span>
+			</div>
+
+		</div>
+
+		<div class="separator separator-dashed my-3"></div>
+
+		{if $url->getCategory()}
+
+		<div class="d-flex flex-center py-3">
+
+			<span class="bullet bullet-vertical h-40px bg-danger me-5"></span>
+			<div class="d-flex flex-column flex-grow-1">
+				<a href="#" class="card-label fw-bolder text-dark fs-5 mb-2">Kategorie</a>
+				<span class="text-muted font-weight-bold">{$url->getCategory()->getTitle()}</span>
+			</div>
+
+		</div>
+
+		{/if}
+
+		<div class="separator separator-dashed my-3"></div>
+
+		{if $url->getPublishedAt()}
+
+		<div class="d-flex flex-center py-3">
+
+			<span class="bullet bullet-vertical h-40px bg-danger me-5"></span>
+			<div class="d-flex flex-column flex-grow-1">
+				<a href="#" class="card-label fw-bolder text-dark fs-5 mb-2">Datum vytvoření</a>
+				<span class="text-muted font-weight-bold">{$url->getPublishedAt()->format('d. n. Y')}</span>
+			</div>
+
+		</div>
+
+		{/if}
+
+		{if $url->getComment()}
+		<div class="separator separator-dashed my-3"></div>
+
+		<div class="d-flex flex-center py-3">
+
+			<span class="bullet bullet-vertical h-40px bg-danger me-5"></span>
+			<div class="d-flex flex-column flex-grow-1">
+				<a href="#" class="card-label fw-bolder text-dark fs-5 mb-2">Komentář</a>
+				<span class="text-muted font-weight-bold">{$url->getComment()}</span>
+			</div>
+
+		</div>
+
+		{/if}
+
+	</div>
+
+	<div class="card-footer">
+		<a n:href=":Admin:Url:update $url->getId()" class="btn btn-primary mr-2">Upravit zkrácenou URL</a>
+		<a n:href="Url:" type="reset" class="btn btn-secondary">Zpět na výpis</a>
+	</div>
+
+</div>

@@ -1,0 +1,80 @@
+stages:
+  - build
+  - test
+build:
+  stage: build
+  image: php:8.0.3-cli-alpine3.13
+  script:
+    - apk upgrade
+    - apk add curl
+    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
+    - composer validate
+    - composer install
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    paths:
+      - vendor/
+
+cs:
+  stage: test
+  image: php:8.0.3-cli-alpine3.13
+  script:
+    - ./vendor/bin/phpcs --standard=./qa/phpcs/ruleset.xml --extensions=php --encoding=utf-8 --tab-width=4 -sp --colors app
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    paths:
+      - vendor/
+
+phpstan:
+  stage: test
+  image: php:8.0.3-cli-alpine3.13
+  script:
+    - ./vendor/bin/phpstan analyse --level 7 --memory-limit 1G --ansi app tests
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    paths:
+      - vendor/
+
+tests:
+  stage: test
+  image: php:8.0.3-cli-alpine3.13
+  services:
+    - mariadb
+  variables:
+    MYSQL_DATABASE: cbbb
+    MYSQL_ROOT_PASSWORD: root
+  script:
+    - docker-php-ext-install pdo pdo_mysql mysqli
+    - php bin/console orm:schema-tool:create
+    - ./vendor/bin/phpunit tests --colors --testdox
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    paths:
+      - vendor/
+
+db-tests:
+  stage: test
+  image: php:8.0.3-cli-alpine3.13
+  services:
+    - mariadb
+  variables:
+    MYSQL_DATABASE: cbbb
+    MYSQL_ROOT_PASSWORD: root
+  script:
+    - docker-php-ext-install pdo pdo_mysql mysqli
+    - php bin/console orm:schema-tool:create
+    - bin/console orm:validate-schema --skip-sync
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    paths:
+      - vendor/
+
+code-checker:
+  stage: test
+  image: php:8.0.3-cli-alpine3.13
+  script:
+    - ./vendor/bin/code-checker --ignore migrations
+  cache:
+    key: $CI_COMMIT_REF_SLUG
+    paths:
+      - vendor/

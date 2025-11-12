@@ -1,0 +1,13 @@
+<?php declare(strict_types = 1);
+
+namespace App\Model\Resolver\Mutation\Role;
+
+use App\Model\Database\Entity\Role;
+use App\Model\Type\InputObjectType\Role\UpdateRoleRequest;
+
+interface IUpdateRoleMutationResolver
+{
+
+	public function resolveUpdateRole(Role $role, UpdateRoleRequest $request): Role;
+
+}

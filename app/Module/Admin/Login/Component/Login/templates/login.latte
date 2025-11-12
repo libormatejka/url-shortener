@@ -1,0 +1,58 @@
+<form n:name="form" class="form w-100 fv-plugins-bootstrap5 fv-plugins-framework bg-white pl-20">
+
+    <!--begin::Heading-->
+    <div class="text-center mb-10">
+
+        <!--begin::Title-->
+        <h1 class="text-dark mb-3">Přihlásit se!</h1>
+        <!--end::Title-->
+
+    </div>
+
+    <div n:if="$form->hasErrors()" class="alert alert-danger" n:foreach="$form->errors as $error" role="alert">
+        {$error}
+    </div>
+
+	<!--begin::Input group-->
+    <div class="fv-row mb-10 fv-plugins-icon-container">
+
+		<!--begin::Label-->
+        <label class="form-label fs-3 fw-bolder text-dark" n:name="email">
+			E-mail
+		</label>
+		<!--end::Label-->
+
+		<!--begin::Input-->
+        <input class="form-control form-control-lg form-control-solid py-6" n:name="email" placeholder="Zadejte e-mail">
+		<!--end::Input-->
+
+		<div class="fv-plugins-message-container invalid-feedback"></div>
+
+    </div>
+	<!--end::Input group-->
+
+	<!--begin::Input group-->
+    <div class="fv-row mb-10 fv-plugins-icon-container">
+
+		<!--begin::Label-->
+        <label class="form-label fs-3 fw-bolder text-dark" n:name="password">
+			Heslo
+		</label>
+		<!--end::Label-->
+
+		<!--begin::Input-->
+        <input class="form-control form-control-lg form-control-solid py-6" n:name="password" placeholder="Zadejte heslo">
+		<!--end::Input-->
+
+		<div class="fv-plugins-message-container invalid-feedback"></div>
+
+    </div>
+	<!--end::Input group-->
+
+	<!--begin::Submit button-->
+	<div class="text-center">
+		<button type="submit" class="btn btn-lg btn-primary w-100 mb-5 py-6">Přihlásit</button>
+	</div>
+	<!--end::Submit button-->
+
+</form>
