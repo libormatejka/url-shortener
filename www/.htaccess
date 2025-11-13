@@ -11,18 +11,129 @@ Require all granted
 	RewriteEngine On
 	RewriteBase /
 
-	# Přesměrování bez www → na www
 	RewriteCond %{HTTP_HOST} ^(?!www\.)(.+) [NC]
-	RewriteRule ^(.*)$ https://www.%1/$1 [R=301,L,NE]
+    RewriteRule ^(.*) https://www.%1/$1 [R=301,NE,L]
 
-	# --- Přesměrování root URL na jinou adresu ---
-	# Přesměruje pouze přesnou domovskou stránku /
-	RewriteCond %{REQUEST_URI} ^/$
-	RewriteRule ^$ https://www.collectorboy.cz/?utm_source=batboy.cz&utm_campaign=batboy.cz&utm_medium=redirect [R=301,L]
-
-	# --- Nette front controller ---
-	# nechá fungovat /admin/ a všechny běžné requesty
+	# front controller
 	RewriteCond %{REQUEST_FILENAME} !-f
 	RewriteCond %{REQUEST_FILENAME} !-d
 	RewriteRule !\.(pdf|js|mjs|ico|gif|jpg|jpeg|png|webp|svg|css|rar|zip|7z|tar\.gz|map|eot|ttf|otf|woff|woff2)$ index.php [L]
 </IfModule>
+
+# enable gzip compression
+<IfModule mod_deflate.c>
+	<IfModule mod_filter.c>
+		AddOutputFilterByType DEFLATE text/html
+		AddOutputFilterByType DEFLATE text/plain
+		AddOutputFilterByType DEFLATE text/xml
+		AddOutputFilterByType DEFLATE text/css
+		AddOutputFilterByType DEFLATE application/javascript
+		AddOutputFilterByType DEFLATE application/json
+		AddOutputFilterByType DEFLATE application/xml
+		AddOutputFilterByType DEFLATE image/svg+xml
+	</IfModule>
+</IfModule>
+
+<IfModule mod_brotli.c>
+
+  AddOutputFilterByType BROTLI_COMPRESS application/javascript
+  AddOutputFilterByType BROTLI_COMPRESS application/json
+  AddOutputFilterByType BROTLI_COMPRESS application/vnd.ms-fontobject
+  AddOutputFilterByType BROTLI_COMPRESS application/xhtml+xml
+  AddOutputFilterByType BROTLI_COMPRESS application/xml
+  AddOutputFilterByType BROTLI_COMPRESS application/font-sfnt
+  AddOutputFilterByType BROTLI_COMPRESS font/otf
+  AddOutputFilterByType BROTLI_COMPRESS font/ttf
+  AddOutputFilterByType BROTLI_COMPRESS image/svg+xml
+  AddOutputFilterByType BROTLI_COMPRESS image/vnd.microsoft.icon
+  AddOutputFilterByType BROTLI_COMPRESS text/plain
+  AddOutputFilterByType BROTLI_COMPRESS text/css
+  AddOutputFilterByType BROTLI_COMPRESS text/xml
+  AddOutputFilterByType BROTLI_COMPRESS text/html
+
+</IfModule>
+
+# BEGIN Leverage Browser Caching #
+<IfModule mod_expires.c>
+
+  ExpiresActive On
+
+  # IMAGES
+  ExpiresByType image/jpg                           "access 300 days"
+  ExpiresByType image/jpeg                          "access 300 days"
+  ExpiresByType image/gif                           "access 300 days"
+  ExpiresByType image/png                           "access 300 days"
+  ExpiresByType image/webp                          "access 300 days"
+
+  # SCRIPTS
+  ExpiresByType text/css                            "access 300 days"
+  ExpiresByType text/x-javascript                   "access 300 days"
+  ExpiresByType text/javascript                     "access 300 days"
+
+  # DOCUMENTS
+  ExpiresByType application/pdf                     "access 300 days"
+
+  ExpiresByType application/x-shockwave-flash       "access 300 days"
+
+  # ICONS
+  ExpiresByType image/ico                           "access 300 days"
+  ExpiresByType image/icon                          "access 300 days"
+  ExpiresByType text/ico                            "access 300 days"
+  ExpiresByType image/x-ico                         "access 300 days"
+  ExpiresByType image/x-icon                        "access 300 days"
+  ExpiresByType application/ico                     "access 300 days"
+
+  # VIDEO
+  ExpiresByType video/ogg                           "access 300 days"
+  ExpiresByType video/mp4                           "access 300 days"
+  ExpiresByType video/webm                          "access 300 days"
+  ExpiresByType video/x-msvideo                     "access 300 days"
+  ExpiresByType video/mpeg                          "access 300 days"
+  ExpiresByType video/quicktime                     "access 300 days"
+  ExpiresByType video/x-la-asf                      "access 300 days"
+  ExpiresByType video/x-ms-asf                      "access 300 days"
+  ExpiresByType x-world/x-vrml                      "access 300 days"
+
+  # FONTS
+  ExpiresByType font/truetype                       "access 300 days"
+  ExpiresByType font/opentype                       "access 300 days"
+  ExpiresByType application/x-font-ttf              "access 300 days"
+  ExpiresByType application/x-font-woff             "access 300 days"
+  ExpiresByType application/font-woff               "access 300 days"
+  ExpiresByType application/vnd.ms-fontobject       "access 300 days"
+
+  ExpiresDefault "access plus 300 days"
+
+  <IfModule mod_headers.c>
+    Header append Cache-Control "public"
+  </IfModule>
+
+</IfModule>
+# END Leverage Browser Caching #
+
+# X-XSS-Protection settings
+Header set X-XSS-Protection "1; mode=block"
+
+# Referrer-Policy settings
+Header always set Referrer-Policy: strict-origin
+
+# X-Content-Type-Options settings
+Header set X-Content-Type-Options nosniff
+
+# X-Frame-Options
+Header set X-Frame-Options SAMEORIGIN
+
+# CSP settings
+Header set Content-Security-Policy: "frame-src https:;"
+Header set Content-Security-Policy: "upgrade-insecure-requests; frame-ancestors 'self'"
+Header set Content-Security-Policy: "default-src 'https:'"
+Header set Content-Security-Policy: "script-src 'self'"
+Header set Content-Security-Policy: "object-src 'none'"
+Header set Content-Security-Policy: "font-src 'self' data: fonts.gstatic.com;"
+
+# Permissions-Policy settings
+#Permissions-Policy "accelerometer=Origin(), autoplay=(), camera=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), publickey-credentials-get=(), usb=()"
+Header set Permissions-Policy "accelerometer=Origin(), autoplay=(), camera=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), publickey-credentials-get=(), usb=()"
+
+# HSTS settings
+Header set Strict-Transport-Security "max-age=31536000; includeSubdomains; preload"
