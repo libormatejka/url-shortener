@@ -1,7 +1,7 @@
 parameters:
 	WEB:
-		name: 'Clown Web'
-		description: 'Minimální web postavený jen na jádru Clown CMS (clown/core).'
+		name: 'BatBoy.cz'
+		description: 'Shorturl affiliate web.'
 
 	uploadsSettings:
 		mediaLibraryDir: /media
