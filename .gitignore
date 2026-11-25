@@ -12,3 +12,6 @@
 /.docker/data/
 /auth.json
 .phpunit.result.cache
+.vscode/
+deployment.log
+qa/phpcs/*.cache
