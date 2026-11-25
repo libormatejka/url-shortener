@@ -1,15 +1,16 @@
 services:
+
   mariadb:
-    container_name: Database
-    image: mariadb:10.6.4-focal
+    image: mariadb:11.8.1-ubi9-rc
     environment:
-      - MYSQL_DATABASE=cbbb
-      - MYSQL_ROOT_PASSWORD=root
+      - MARIADB_ROOT_PASSWORD=root
+      - MARIADB_DATABASE=clownweb_coreonly
     volumes:
-      - ./data/db/:/var/lib/mysql:delegated
+      - dbdata:/var/lib/mysql
+    ports:
+      - 3307:3306
 
   php:
-    container_name: PHP
     build:
       context: ./..
       dockerfile: ./.docker/php/Dockerfile
@@ -19,20 +20,23 @@ services:
     environment:
       - NETTE_DEBUG=true
 
+  phpmyadmin:
+    image: phpmyadmin:latest
+    environment:
+      - PMA_HOST=mariadb
+    ports:
+      - 8082:80
+
   node:
-    container_name: Node
     build:
       context: ./..
       dockerfile: ./.docker/node/Dockerfile
     working_dir: /srv
     volumes:
       - ./../:/srv:delegated
-    ports:
-      - "8080:8080"
     command: [ "tail", "-f", "/dev/null" ]
 
   nginx:
-    container_name: Nginx
     image: nginx:1.19.4-alpine
     volumes:
       - ./../www:/srv/www:delegated
@@ -40,15 +44,7 @@ services:
     environment:
       - NGINX_PHP_HOST=php
     ports:
-      - 80:80
+      - 8081:80
 
-  phpmyadmin:
-    container_name: phpMyAdmin
-    image: phpmyadmin:5.1.1-apache
-    environment:
-      - PMA_HOST=mariadb
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=root
-    ports:
-      - 10000:80
+volumes:
+  dbdata:

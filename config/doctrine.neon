@@ -1,33 +1,36 @@
 extensions:
 	console: Contributte\Console\DI\ConsoleExtension(%consoleMode%)
-	doctrine.annotations: Nettrine\Annotations\DI\AnnotationsExtension
 	doctrine.dbal: Nettrine\DBAL\DI\DbalExtension
-	doctrine.dbal.console: Nettrine\DBAL\DI\DbalConsoleExtension
 	doctrine.orm: Nettrine\ORM\DI\OrmExtension
-	doctrine.orm.annotations: Nettrine\ORM\DI\OrmAnnotationsExtension
-	doctrine.orm.console: Nettrine\ORM\DI\OrmConsoleExtension
-	doctrine.cache: Nettrine\Cache\DI\CacheExtension
 	doctrine.migrations: Nettrine\Migrations\DI\MigrationsExtension
-	doctrine.fixtures: Nettrine\Fixtures\DI\FixturesExtension
 
 doctrine.dbal:
 	debug:
 		panel: %debugMode%
-	connection:
-		driver: pdo_mysql
-		host: %doctrine.host%
-		user: %doctrine.user%
-		password: %doctrine.password%
-		dbname: %doctrine.dbname%
+	connections:
+		default:
+			driver: pdo_mysql
+			host: %doctrine.host%
+			user: %doctrine.user%
+			password: %doctrine.password%
+			dbname: %doctrine.dbname%
+			charset: utf8mb4
+			defaultTableOptions:
+				charset: utf8mb4
+				collate: utf8mb4_unicode_ci
 
-
-doctrine.orm.annotations:
-	mapping:
-		App\Model: %appDir%/Model
+doctrine.orm:
+	managers:
+		default:
+			connection: default
+			autoGenerateProxyClasses: 2
+			mapping:
+				ClownCore:
+					type: attributes
+					directories:
+						- %appDir%/../vendor/clown/core/src/Entity
+					namespace: Clown\Core\Entity
 
 doctrine.migrations:
-	directory: migrations/
-
-doctrine.fixtures:
-	paths:
-		- %appDir%/Model/Database/Fixture
+	directories:
+		App\Migrations: %appDir%/../migrations

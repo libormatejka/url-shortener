@@ -2,26 +2,28 @@
 
 namespace App\Router;
 
-use Nette;
+use Clown\Core\AddonRegistry\RouteRegistry;
+use Clown\Core\Routing\CoreRoutes;
 use Nette\Application\Routers\RouteList;
+use Nette\StaticClass;
 
 final class RouterFactory
 {
 
-	use Nette\StaticClass;
+	use StaticClass;
 
-	public static function createRouter(): RouteList
+	/**
+	 * Addon routy (clown.route) musí přijít před CoreRoutes::front(), protože
+	 * ta končí catch-all routou <slug>/ — stejné pravidlo jako pro
+	 * site-specific routy webu.
+	 */
+	public static function createRouter(RouteRegistry $routeRegistry): RouteList
 	{
-		$adminRouter = new RouteList('Admin');
-		$adminRouter->addRoute('admin/<presenter>/<action>[/<id>]', 'Homepage:default');
-
-		$frontRouter = new RouteList('Front');
-		$frontRouter->addRoute('<slug .+>', 'Url:detail');
-		$frontRouter->addRoute('<presenter>/<action>[/<id>]', 'Homepage:default');
-
 		$router = new RouteList();
-		$router->add($adminRouter);
-		$router->add($frontRouter);
+		$router->add(CoreRoutes::admin());
+		$router->add(CoreRoutes::api());
+		$router->add($routeRegistry->createRouteList());
+		$router->add(CoreRoutes::front());
 
 		return $router;
 	}

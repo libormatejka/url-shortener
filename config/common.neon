@@ -1,60 +1,67 @@
 parameters:
+	WEB:
+		name: 'Clown Web'
+		description: 'Minimální web postavený jen na jádru Clown CMS (clown/core).'
 
-	GTM:
-		gtmId: GTM-WD2JNHV
+	uploadsSettings:
+		mediaLibraryDir: /media
+		mediaLibraryPath: %wwwDir%/media
+		mediaSizes:
+			admin-thumb:
+				width: 320
+				height: 180
+				quality: 85
+			article-thumb:
+				width: 320
+				height: 180
+				quality: 85
 
 	version:
-		app: 0.1
-		css: 0.1
-		js: 0.1
+		css: 0.1.0
+		js: 0.1.0
+
+extensions:
+	clownCore: Clown\Core\DI\ClownCoreExtension
+
+clownCore:
+	templateOverrideDir: %appDir%/templates/override
+	mediaLibraryDir: %uploadsSettings.mediaLibraryDir%
+	mediaLibraryPath: %uploadsSettings.mediaLibraryPath%
+	mediaSizes: %uploadsSettings.mediaSizes%
+	webTitle: %WEB.name%
+	pageLayouts:
+		one-column: 'Jeden sloupec'
+	wwwDir: %wwwDir%
+	cssVersion: %version.css%
+	jsVersion: %version.js%
+	passwordAuthenticator: true
 
 application:
 	errorPresenter: Front:Error
 	mapping:
-		*: [App\Module, * ,*\*Presenter]
-
+		*: [App\Module, *, *\*Presenter]
 
 session:
 	expiration: 14 days
-
 
 di:
 	export:
 		parameters: no
 		tags: no
 
-search:
-	frontModule:
-		in: %appDir%/Module/Front
-
-		files:
-			- *Factory.php
-
-	adminModule:
-		in: %appDir%/Module/Admin
-
-		files:
-			- *Factory.php
-
-	resolver:
-		in: %appDir%/Model/Resolver
-
 services:
+	cache.storage: Nette\Caching\Storages\FileStorage(%tempDir%/cache)
+	cache: Nette\Caching\Cache(@cache.storage)
 	- App\Router\RouterFactory::createRouter
-	- App\Model\Resolver\Authenticator\CbbbAuthenticator
-	security.passwords: Nette\Security\Passwords(::PASSWORD_BCRYPT, [cost: 12])
-
+	- App\Model\Service\AssetManifestResolver
+	- App\Model\Command\SeedCommand
+	- App\Model\Service\PackageCatalogService(composerLockPath: %rootDir%/composer.lock)
 	-
-		implement: App\Module\Front\Component\GTM\IGTMFactory
-		arguments: [%GTM.gtmId%]
-
+		factory: App\Model\Service\PackagesAdminMenuProvider
+		tags: [clown.adminMenuItem]
 	-
-		implement: App\Module\Front\Component\Assets\IAssetsFactory
-		arguments: [%version.css%, %version.js%]
+		factory: App\Model\Service\LogAdminMenuProvider
+		tags: [clown.adminMenuItem]
 
 includes:
 	- doctrine.neon
-
-http:
-	headers:
-		X-Powered-By: Nette & CBBB

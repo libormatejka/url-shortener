@@ -1,27 +1,14 @@
-# Composer
-vendor
-
-# Deployment
-deployment.log
-.deployment
-
-# Docker
-.docker/data/db/*
-
-# Gitlab
-auth.json
-
-# VS Code
-.history
-*.code-workspace
-.vscode
-
-# Nette
-config/manifest.json
-qa/phpcs/phpcs.cache
-node_modules
-www/assets
-
-temp*
-temp/cache*
-temp/cache/*
+/vendor/
+/node_modules/
+/temp/*
+!/temp/.gitkeep
+/log/*
+!/log/.gitkeep
+/config/local.neon
+/config/manifest-assets.json
+/www/assets/
+/www/media/*
+!/www/media/.gitkeep
+/.docker/data/
+/auth.json
+.phpunit.result.cache
